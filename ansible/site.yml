@@ -1,0 +1,28 @@
+# This is the main playbook that will be executed by Ansible. It defines the tasks to be performed on the managed nodes.
+---
+- name: Configure managed nodes
+  hosts: managed
+  become: true
+  tasks:
+    - name: Ensure apt cache is updated
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Ensure nginx is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Create a simple index page
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <h1>Hello from {{ inventory_hostname }}</h1>
+          <p>Provisioned by Ansible (via Vagrant ansible_local)</p>
