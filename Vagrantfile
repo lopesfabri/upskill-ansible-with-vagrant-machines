@@ -20,8 +20,8 @@ Vagrant.configure("2") do |config|
       end
 
       if opts[:role] == "control"
-        machine.vm.synced_folder "./ansible", "/ansible", mount_options: ["dmode=775, fmode=600"]
-        machine.vm.synced_folder ".vagrant", "/ansible/.vagrant", mount_options: ["dmode=775, fmode=600"]
+        machine.vm.synced_folder "./ansible", "/ansible", mount_options: ["dmode=775", "fmode=600"]
+        machine.vm.synced_folder ".vagrant", "/ansible/.vagrant", mount_options: ["dmode=775", "fmode=600"]
         machine.vm.provision "shell", path: "provision/bootstrap-control.sh"
       else
         machine.vm.provision "shell", path: "provision/bootstrap-node.sh"
